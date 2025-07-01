@@ -33,6 +33,7 @@ The example LangGraph implementation provided can use:
 
 1. [Amazon Bedrock](https://aws.amazon.com/bedrock/)
 1. [OpenAI](https://openai.com/)
+1. [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
 1. [Google Gemini](https://ai.google.dev/)
 
 To explore support for other models/providers please raise a GitHub issue.
@@ -146,6 +147,12 @@ genai:
           region: us-west-2
         # openai:
         #   apiKey: ${OPENAI_API_KEY}
+        #   modelName: 'gpt-4'
+        # azureOpenai:
+        #   apiKey: ${AZURE_OPENAI_API_KEY}
+        #   endpoint: ${AZURE_OPENAI_ENDPOINT}
+        #   deploymentName: ${AZURE_OPENAI_DEPLOYMENT_NAME}
+        #   apiVersion: '2024-02-01'
         # gemini:
         #   apiKey: ${GOOGLE_AI_API_KEY}
         #   modelName: 'gemini-1.5-pro'

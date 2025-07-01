@@ -109,8 +109,8 @@ costInsights:
 
 genai:
   agents:
-    gemini-assistant:
-      description: Google Gemini chat assistant
+    azure-assistant:
+      description: Azure OpenAI chat assistant
       prompt: >
         You are a knowledgeable AI assistant specializing in platform engineering, DevOps, and software development.
         
@@ -124,10 +124,12 @@ genai:
         
         You are currently assisting {username} in their Backstage environment.
       langgraph:
-        messagesMaxTokens: 8000
-        temperature: 0.3
-        maxTokens: 1000
-        gemini:
-          apiKey: ${GOOGLE_AI_API_KEY}
-          modelName: 'gemini-1.5-flash'
+        messagesMaxTokens: 16000
+        temperature: 1
+        maxTokens: 2000
+        azureOpenai:
+          apiKey: ${AZURE_OPENAI_API_KEY}
+          endpoint: ${AZURE_OPENAI_ENDPOINT}
+          deploymentName: ${AZURE_OPENAI_DEPLOYMENT_NAME}
+          apiVersion: '2024-12-01-preview'
       tools: []

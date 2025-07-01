@@ -86,6 +86,11 @@ export class LangGraphReactAgentType implements AgentType {
         agentLangGraphConfig,
         logger,
       );
+    } else if (agentLangGraphConfig.azureOpenai) {
+      agentModel = LangGraphReactAgentType.createAzureOpenAIModel(
+        agentLangGraphConfig,
+        logger,
+      );
     } else if (agentLangGraphConfig.gemini) {
       agentModel = LangGraphReactAgentType.createGeminiModel(
         agentLangGraphConfig,
@@ -208,6 +213,33 @@ export class LangGraphReactAgentType implements AgentType {
       modelName: modelName,
       temperature: config.temperature,
       maxTokens: config.maxTokens,
+      topP: config.topP,
+    });
+  }
+
+  private static createAzureOpenAIModel(
+    config: LangGraphAgentConfig,
+    logger: LoggerService,
+  ) {
+    const { apiKey, endpoint, deploymentName, apiVersion } = config.azureOpenai!;
+
+    const version = apiVersion ?? '2024-02-01';
+
+    logger.info(
+      `Instantiating Azure ChatOpenAI deployment '${deploymentName}' at '${endpoint}'`,
+    );
+
+    return new ChatOpenAI({
+      apiKey: apiKey,
+      configuration: {
+        baseURL: `${endpoint}/openai/deployments/${deploymentName}`,
+        defaultQuery: { 'api-version': version },
+        defaultHeaders: {
+          'api-key': apiKey,
+        },
+      },
+      streaming: true,
+      temperature: config.temperature,
       topP: config.topP,
     });
   }

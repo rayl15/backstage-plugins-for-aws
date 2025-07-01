@@ -93,6 +93,28 @@ export interface Config {
             baseUrl?: string;
           };
           /**
+           * (Optional) Specific configuration for Azure OpenAI
+           */
+          azureOpenai?: {
+            /**
+             * (Required) Azure OpenAI API key for authentication
+             * @visibility secret
+             */
+            apiKey: string;
+            /**
+             * (Required) Azure OpenAI endpoint URL
+             */
+            endpoint: string;
+            /**
+             * (Required) Azure OpenAI deployment name
+             */
+            deploymentName: string;
+            /**
+             * (Optional) Azure OpenAI API version
+             */
+            apiVersion?: string;
+          };
+          /**
            * (Optional) Specific configuration for Google Gemini
            */
           gemini?: {
