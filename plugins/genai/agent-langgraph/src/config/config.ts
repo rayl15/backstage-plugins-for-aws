@@ -15,6 +15,7 @@ import { Config } from '@backstage/config';
 import {
   LangGraphAgentBedrockConfig,
   LangGraphAgentConfig,
+  LangGraphAgentGeminiConfig,
   LangGraphAgentLangFuseConfig,
   LangGraphAgentOpenAIConfig,
   SharedLangGraphAgentConfig,
@@ -59,6 +60,7 @@ export function readLangGraphAgentConfig(
     topP: config.getOptionalNumber('topP'),
     bedrock: readLangGraphAgentBedrockConfig(config),
     openai: readLangGraphAgentOpenAIConfig(config),
+    gemini: readLangGraphAgentGeminiConfig(config),
   };
 }
 
@@ -90,5 +92,20 @@ export function readLangGraphAgentOpenAIConfig(
     apiKey: config.getString('apiKey'),
     modelName: config.getOptionalString('modelName'),
     baseUrl: config.getOptionalString('baseUrl'),
+  };
+}
+
+export function readLangGraphAgentGeminiConfig(
+  agentConfig: Config,
+): LangGraphAgentGeminiConfig | undefined {
+  if (!agentConfig.has('gemini')) {
+    return undefined;
+  }
+
+  const config = agentConfig.getConfig('gemini');
+
+  return {
+    apiKey: config.getString('apiKey'),
+    modelName: config.getOptionalString('modelName'),
   };
 }

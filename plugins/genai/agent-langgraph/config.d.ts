@@ -92,6 +92,20 @@ export interface Config {
              */
             baseUrl?: string;
           };
+          /**
+           * (Optional) Specific configuration for Google Gemini
+           */
+          gemini?: {
+            /**
+             * (Required) Google AI API key for authentication
+             * @visibility secret
+             */
+            apiKey: string;
+            /**
+             * (Optional) Name of the Gemini model to use
+             */
+            modelName?: string;
+          };
         };
       };
     };

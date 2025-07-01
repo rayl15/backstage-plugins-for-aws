@@ -33,6 +33,7 @@ The example LangGraph implementation provided can use:
 
 1. [Amazon Bedrock](https://aws.amazon.com/bedrock/)
 1. [OpenAI](https://openai.com/)
+1. [Google Gemini](https://ai.google.dev/)
 
 To explore support for other models/providers please raise a GitHub issue.
 
@@ -145,6 +146,9 @@ genai:
           region: us-west-2
         # openai:
         #   apiKey: ${OPENAI_API_KEY}
+        # gemini:
+        #   apiKey: ${GOOGLE_AI_API_KEY}
+        #   modelName: 'gemini-1.5-pro'
 ```
 
 See the [LangGraph agent documentation](./agent-langgraph/) for the full configuration reference.

@@ -22,6 +22,7 @@ import {
 } from '@backstage/catalog-model';
 import { ChatBedrockConverse } from '@langchain/aws';
 import { ChatOpenAI } from '@langchain/openai';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { CompiledStateGraph, MemorySaver } from '@langchain/langgraph';
 import { createReactAgent } from '@langchain/langgraph/prebuilt';
 import {
@@ -82,6 +83,11 @@ export class LangGraphReactAgentType implements AgentType {
         LangGraphReactAgentType.createBedrockModel(agentLangGraphConfig);
     } else if (agentLangGraphConfig.openai) {
       agentModel = LangGraphReactAgentType.createOpenAIModel(
+        agentLangGraphConfig,
+        logger,
+      );
+    } else if (agentLangGraphConfig.gemini) {
+      agentModel = LangGraphReactAgentType.createGeminiModel(
         agentLangGraphConfig,
         logger,
       );
@@ -202,6 +208,28 @@ export class LangGraphReactAgentType implements AgentType {
       modelName: modelName,
       temperature: config.temperature,
       maxTokens: config.maxTokens,
+      topP: config.topP,
+    });
+  }
+
+  private static createGeminiModel(
+    config: LangGraphAgentConfig,
+    logger: LoggerService,
+  ) {
+    const { modelName, apiKey } = config.gemini!;
+
+    const model = modelName ?? 'gemini-1.5-pro';
+
+    logger.info(
+      `Instantiating ChatGoogleGenerativeAI model '${model}'`,
+    );
+
+    return new ChatGoogleGenerativeAI({
+      apiKey: apiKey,
+      streaming: true,
+      modelName: model,
+      temperature: config.temperature,
+      maxOutputTokens: config.maxTokens,
       topP: config.topP,
     });
   }
