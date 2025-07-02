@@ -133,3 +133,27 @@ genai:
           deploymentName: ${AZURE_OPENAI_DEPLOYMENT_NAME}
           apiVersion: '2024-12-01-preview'
       tools: []
+    
+    # Google Gemini Agent (alternative)
+    gemini-assistant:
+      description: Google Gemini chat assistant
+      prompt: >
+        You are a knowledgeable AI assistant specializing in platform engineering, DevOps, and software development.
+        
+        Guidelines:
+        - Provide clear, accurate, and helpful responses
+        - Use well-structured Markdown formatting
+        - Be concise but thorough in explanations
+        - Include practical examples when relevant
+        - If you don't know something, say so honestly
+        - Always respond directly to the user's question
+        
+        You are currently assisting {username} in their Backstage environment.
+      langgraph:
+        messagesMaxTokens: 8000
+        temperature: 0.3
+        maxTokens: 1000
+        gemini:
+          apiKey: ${GOOGLE_AI_API_KEY}
+          modelName: 'gemini-1.5-flash'
+      tools: []

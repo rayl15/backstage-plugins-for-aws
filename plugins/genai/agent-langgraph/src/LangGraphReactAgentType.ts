@@ -253,17 +253,40 @@ export class LangGraphReactAgentType implements AgentType {
     const model = modelName ?? 'gemini-1.5-pro';
 
     logger.info(
-      `Instantiating ChatGoogleGenerativeAI model '${model}'`,
+      `Instantiating ChatGoogleGenerativeAI model '${model}' with apiKey: ${apiKey ? 'SET' : 'UNDEFINED'}`,
     );
 
-    return new ChatGoogleGenerativeAI({
-      apiKey: apiKey,
-      streaming: true,
-      modelName: model,
-      temperature: config.temperature,
-      maxOutputTokens: config.maxTokens,
-      topP: config.topP,
-    });
+    if (!apiKey || typeof apiKey !== 'string') {
+      throw new Error(`Google AI API key is required but not provided. Got: ${typeof apiKey}`);
+    }
+
+    try {
+      // Try with minimal configuration first
+      const geminiConfig = {
+        apiKey: apiKey.trim(),
+        model: model, // Use 'model' instead of 'modelName' for Google GenAI
+        streaming: false, // Disable streaming initially to test
+      };
+      
+      // Add optional parameters only if they exist
+      if (config.temperature !== undefined) {
+        (geminiConfig as any).temperature = config.temperature;
+      }
+      if (config.maxTokens !== undefined) {
+        (geminiConfig as any).maxOutputTokens = config.maxTokens;
+      }
+      if (config.topP !== undefined) {
+        (geminiConfig as any).topP = config.topP;
+      }
+      
+      logger.info(`Creating Gemini with config: ${JSON.stringify(geminiConfig, null, 2)}`);
+      
+      return new ChatGoogleGenerativeAI(geminiConfig);
+    } catch (error) {
+      logger.error(`Failed to create Gemini model: ${error}`);
+      logger.error(`Error stack: ${(error as Error).stack}`);
+      throw new Error(`Failed to initialize Google Gemini model: ${error}`);
+    }
   }
 
   private buildCallbackHandler(
