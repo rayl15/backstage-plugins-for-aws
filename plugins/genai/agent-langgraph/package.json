@@ -1,7 +1,7 @@
 {
-  "name": "@aws/genai-plugin-langgraph-agent-for-backstage",
-  "description": "LangGraph agent module package for the GenAI AWS plugins for Backstage",
-  "version": "0.4.0",
+  "name": "@rayl15/genai-plugin-langgraph-agent-for-backstage",
+  "description": "LangGraph agent with Azure OpenAI and Google Gemini support for Backstage GenAI plugin",
+  "version": "0.4.3",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "license": "Apache-2.0",
@@ -26,8 +26,6 @@
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
-    "@aws/genai-plugin-for-backstage-common": "workspace:^",
-    "@aws/genai-plugin-for-backstage-node": "workspace:^",
     "@backstage/backend-plugin-api": "^0.8.0",
     "@backstage/catalog-model": "^1.7.0",
     "@backstage/config": "^1.2.0",
@@ -40,6 +38,10 @@
     "@langchain/openai": "^0.5.11",
     "langfuse-langchain": "^3.29.1",
     "zod": "^3.23.8"
+  },
+  "peerDependencies": {
+    "@aws/genai-plugin-for-backstage-common": "^0.4.0",
+    "@aws/genai-plugin-for-backstage-node": "^0.4.0"
   },
   "devDependencies": {
     "@backstage/cli": "^0.26.5"
